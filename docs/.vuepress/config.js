@@ -76,13 +76,7 @@ module.exports = {
     "author": "qunincey",
     "authorAvatar": "/avatar.png",
     "record": "xxxx",
-    "startYear": "2017",
-    "themeConfig": {
-      "valineConfig": {
-        "appId": 'XIkvSePK19mQ2k9GQy49t44S-gzGzoHsz',// your appId
-        "appKey": 'NR7IUxJqpb1ozkyMkFMVo5Nl', // your appKey
-      }
-    }  
+    "startYear": "2017"
   },
   "markdown": {
     "lineNumbers": true
