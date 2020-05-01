@@ -2,6 +2,7 @@ module.exports = {
   "title": "qunincey",
   "description": "Learn forever",
   "dest": "public",
+  "base":"/qunincey/",
   "head": [
     [
       "link",
