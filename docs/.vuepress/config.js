@@ -2,6 +2,7 @@ module.exports = {
   "title": "qunincey",
   "description": "Learn forever",
   "dest": "public",
+  "base":"/qunincey/",
   "head": [
     [
       "link",
@@ -37,7 +38,7 @@ module.exports = {
         "items": [
           {
             "text": "GitHub",
-            "link": "https://github.com/recoluan",
+            "link": "https://github.com/qunincey",
             "icon": "reco-github"
           }
         ]
