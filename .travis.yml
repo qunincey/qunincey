@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - lts/*
 script:
-  - vuepress build docs
+  - npm run build
 deploy:
   provider: pages
   skip-cleanup: true

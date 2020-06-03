@@ -31,3 +31,32 @@ git log --graph 图形化提交信息
 
 ## gitk
 gitk可视化工具
+
+## git cat-file
+查看commit,tree,blob信息
+
+git cat-file -p 53052041d76d73c0 -p 查看内容
+git cat-file -t 53052041d76d73c0 -t 查看文件类型
+执行完后会显示commit内容
+```
+tree 69e9543530ed4eed2e3ff22a264033ea12a2ad3c
+parent 0039127e3da9ba20d25276f2a54af48cc8c3ad32
+author qunincey@gmail.com <qunincey@gmail.com> 1590927581 +0800
+committer qunincey@gmail.com <qunincey@gmail.com> 1590927581 +0800
+
+fix
+```
+tree 是commit包含的树信息 parent是上一个提交信息
+
+## commit, tree , blob
+每一次提交都会生成一个commit对象，commit中每一个文件夹会生成一个树，每一个文件会生成一个blob，每一个blob和数都会对应的一个hash值，git在大部分情况下如果hash值相同（就是没有修改的情况下）都会使用同一个hash
+
+## 删除分支
+
+git branch -d 分支名 删除分支，当分支没有被合并的时候会报一个警告，如果确定删除可以使用   
+git branch -D 分支名
+
+## 修改提交信息
+
+git commit --amend 修改最近一次commit信息
+
