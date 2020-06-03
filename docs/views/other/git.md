@@ -60,3 +60,9 @@ git branch -D 分支名
 
 git commit --amend 修改最近一次commit信息
 
+修改最近几次的commit
+git rebase -i gitcommit的hash值(选择你要修改的commit的上一个提交)
+弹出交互式界面，如下图:    
+![alt](../other/image/git-rebase.png)   
+讲要修改的提交前的pick改为reword或者r，保存并退出，git会自动弹出下一个编辑提交信息的界面
+
