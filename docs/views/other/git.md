@@ -59,7 +59,6 @@ git branch -D 分支名
 ## 修改提交信息
 
 git commit --amend 修改最近一次commit信息
-
 修改最近几次的commit
 git rebase -i gitcommit的hash值(选择你要修改的commit的上一个提交)
 弹出交互式界面，如下图:    
