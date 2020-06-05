@@ -66,3 +66,7 @@ git rebase -i gitcommit的hash值(选择你要修改的commit的上一个提交)
 ![alt](../other/image/git-rebase.png)   
 讲要修改的提交前的pick改为reword或者r，保存并退出，git会自动弹出下一个编辑提交信息的界面
 
+## 合并提交信息
+
+git rebase -i gitcommit的hash值(选择你要修改的commit的上一个提交)
+同样需要打开交互是界面，讲pick改为squash即可，注意无论合并几个，都要留一个你想要的提交写出pick，保存并退出，git会自动弹出下一个编辑合并后提交的信息
