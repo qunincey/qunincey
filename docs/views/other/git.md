@@ -69,3 +69,22 @@ git rebase -i gitcommit的hash值(选择你要修改的commit的上一个提交)
 
 git rebase -i gitcommit的hash值(选择你要修改的commit的上一个提交)
 同样需要打开交互是界面，讲pick改为squash即可，注意无论合并几个，都要留一个你想要的提交写出pick，保存并退出，git会自动弹出下一个编辑合并后提交的信息
+
+## 比较暂存区和HEAD文件的差异
+
+git diff --cached
+
+## 比较暂存区和工作区之间的差异
+
+git diff 
+git diff -- 具体文件名  查看具体文件差异
+
+## git reset命令
+
+git reset HEAD 让暂存区回复和HEAD一样的状态，这里的恢复不是删除或者还原文件，只是将暂存区的文件还原回工作区
+git reset HEAD 文件名  单独还原某一个文件
+
+git reset 有三个参数
+--soft 这个只是把 HEAD 指向的 commit 恢复到你指定的 commit，暂存区 工作区不变
+--hard 这个是 把 HEAD， 暂存区， 工作区 都修改为 你指定的 commit 的时候的文件状态
+--mixed 这个是不加时候的默认参数，把 HEAD，暂存区 修改为 你指定的 commit 的时候的文件状态，工作区保持不变
