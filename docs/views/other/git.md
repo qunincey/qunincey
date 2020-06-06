@@ -20,6 +20,8 @@ git add -A：将文件的修改，文件的删除，文件的新建，添加到�
  git mv 旧文件名 新文件名 eg:  git mv readme Rename 
  实际操作过可以直接改文件名，然后走add  commit流程效果是一样的。
 
+## 删除文件
+git rm  文件名 
 
 ## git log查看日志文件
 
@@ -79,6 +81,10 @@ git diff --cached
 git diff 
 git diff -- 具体文件名  查看具体文件差异
 
+## 比较两个分支之间的差异
+
+git diff 分支名字 分支名字 -- 文件名  不加文件名 
+
 ## git reset命令
 
 git reset HEAD 让暂存区回复和HEAD一样的状态，这里的恢复不是删除或者还原文件，只是将暂存区的文件还原回工作区
@@ -89,6 +95,23 @@ git reset 有三个参数
 --hard 这个是 把 HEAD， 暂存区， 工作区 都修改为 你指定的 commit 的时候的文件状态
 --mixed 这个是不加时候的默认参数，把 HEAD，暂存区 修改为 你指定的 commit 的时候的文件状态，工作区保持不变
 
+## git checkout
+git checkout 文件名  从工作区取消文件的修改
+
 ## git stash
 git stash 将工作区的变更保存
 git stash 查看储藏的列表
+git stash apply 将储藏的内容还原，但是stash list里的记录不删除
+git stash pop 将储藏的内容还原，但是stash list里的记录删除 
+
+## git获取ssh密钥
+
+打开git bash 输入如下命令即可。
+```
+ls -al ~/.ssh
+```
+
+## git远程仓库相关命令
+
+git remote -v 查看远程仓库信息    
+git remote rename <old> <new> 重命名原仓库名字
