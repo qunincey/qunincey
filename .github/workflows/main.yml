@@ -20,7 +20,11 @@ jobs:
 
       # 生成静态文件
       - name: Build
+<<<<<<< HEAD
         run: npm install && npm run build
+=======
+        run: npm install && npm run docs:build
+>>>>>>> 53052041d76d73c048d4b0bdcaf24215ef04f96e
 
       # 部署到 GitHub Pages
       - name: Deploy

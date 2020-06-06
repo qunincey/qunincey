@@ -20,8 +20,11 @@ git add -A：将文件的修改，文件的删除，文件的新建，添加到�
  git mv 旧文件名 新文件名 eg:  git mv readme Rename 
  实际操作过可以直接改文件名，然后走add  commit流程效果是一样的。
 
+<<<<<<< HEAD
 ## 删除文件
 git rm  文件名 
+=======
+>>>>>>> 53052041d76d73c048d4b0bdcaf24215ef04f96e
 
 ## git log查看日志文件
 
