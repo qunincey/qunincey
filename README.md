@@ -1,11 +1,3 @@
-# vuepress-theme-reco-demo
+# 记录一下日常用到或者学到的技术
 
-Blog demo for vuepress-theme-reco
-
-```bash
-# 编译
-npm run build
-
-# 启动
-npm run dev
-```
+https://qunincey.github.io/qunincey/
