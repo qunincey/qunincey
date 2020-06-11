@@ -7,8 +7,6 @@ categories:
  - 数据库
 ---
 
-# mysql必知必会(1)
-
 数据库定义:数据库是一个以某种有组织的方式存储的数据集合。
 
 表:表是一种结构化的文件，可用来存储某种特定类型的数据。
@@ -97,4 +95,128 @@ SHOW ERRORS和SHOW WARNINGS，用来显示服务器错误或警告消息。
   ```sql
   select prod_name from products where prod_price is null;  # 返回prod_price为空值null的prod_name,无对应数据 
   ```
--
+- and 和 or   
+  使用and和or进行where子句连接，但要注意，同时使用and，or时，查询是由顺序的，必须使用()将子句包裹起来。
+  ```sql
+  select prod_name,prod_price from products where vend_id = 1002 or vend_id = 1003; 
+  ```
+- in 和 not   
+  in
+  ```sql
+  select prod_name,prod_price from products
+  where vend_id in (1002,1003) order by prod_name;
+  ```
+  not
+  ```sql
+  select prod_name,prod_price from products
+  where vend_id not in (1002,1003) order by prod_name;
+  # Mysql支持not对in，between，exsits子句取反 
+  ```
+- 通配符搜索    
+  使用%和_进行通配符搜索，%匹配多个字符，_匹配一个字符,使用like匹配字段中包含anvil，并且anvil出现的次数不受限制。
+  ```sql
+  select prod_id,prod_name from products where prod_name like "%anvil%"; 
+  ```
+  注意 % 不能匹配null值，并且将%放在句首将会拖慢搜索速度
+- 正则表达式匹配
+  mysql中也可以使用正则匹配，但是对于正则表达式的支持比较有限，这里只记录书中出现的
+
+  在正则表达式中，匹配任意 一个 字符 
+  ```sql
+  select prod_name from products where prod_name regexp ".000";
+  ```
+  正则表达式匹配默认不分大小写，需使用BINARY区分大小写
+  ```sql
+  select prod_name from products where prod_name regexp binary "JetPack .000";
+  ```
+  正则表达式的OR操作符： |
+  ```sql
+  select prod_name from products where prod_name regexp "1000|2000" order by prod_name;
+  ```
+  正则表达式匹配几个字符之一 [ ]
+  ```sql
+  select prod_name from products where prod_name regexp '[123] Ton' order by prod_name;  # [123]匹配单一字符：1或2或3
+  ```
+  正则表达式匹配范围 
+  ```sql
+  select prod_name from products where prod_name regexp '[1-5] Ton' order by prod_name;  # [1-5]匹配1,2,3,4,5
+  ```
+  正则表达式匹配特殊字符，必须用\\前导，进行转义 
+  多数正则使用单反斜杠转义，但mysql使用双反斜杠，mysql自己解释一个，正则表达式库解释一个
+  ```sql
+  select vend_name from vendors where vend_name regexp "\\." order by vend_name; # ‘\\.'匹配字符.
+  ```
+- 正则表达式匹配字符类    
+  [:alnum:]	任意字母和数字（同[a-zA-Z0-9]） 
+  [:alpha:]	任意字符（同[a-zA-Z]）    
+  [:blank:]	空格和制表（同[\\t]）    
+  [:cntrl:]	ASCII控制字符（ASCII 0到31和127）    
+  [:digit:]	任意数字（同[0-9]）    
+  [:graph:]	与[:print:]相同，但不包括空格 
+  [:lower:]	任意小写字母（同[a-z]）    
+  [:print:]	任意可打印字符 
+  [:punct:]	既不在[:alnum:]又不在[:cntrl:]中的任意字符 
+  [:space:]	包括空格在内的任意空白字符（同[\\f\\n\\r\\t\\v]）    
+  [:upper:]	任意大写字母（同[A-Z]）    
+  [:xdigit:]	任意十六进制数字（同[a-fA-F0-9]）    
+  ```sql
+  select prod_name from products where prod_name regexp '[:digit:]' order by prod_name; #[:digit:]匹配任意数字 
+  ```
+
+- 匹配多个实例 
+  mysql正则中对于多个重复字符的支持   
+  ![重复字符](../database/image/bjbh01.png)
+  ```sql
+  select prod_name from products where prod_name regexp '\\([0-9] sticks?\\)'
+  order by prod_name;  # 返回了'TNT (1 stick)'和'TNT (5 sticks)'
+  ```
+- 定位符
+  !['定位符'](../database/image/bibh02.png)
+  ```sql
+  select prod_name from products where prod_name regexp '^[0-9\\.]' order by prod_name; #找出以一个数（包括以小数点开始的数）开始的所有产品
+  select prod_name from products where prod_name regexp '[0-9\\.]' order by prod_name;  #找出包括小数点和数字的所有产品
+  ```
+- 拼接字段 concat()
+  ```sql
+  select concat(vend_name,' (',vend_country,')') from vendors order by vend_name; 
+  ```
+- 删除空格
+  删除数据左侧多余空格 ltrim()   
+  删除数据两侧多余空格 trim()   
+  删除数据右侧多余空格 rtrim()  
+  ```sql
+  select concat(rtrim(vend_name),' (',rtrim(vend_country),')') from vendors order by vend_name;
+  ``` 
+
+- as赋予别名
+  ```sql
+  select concat(rtrim(vend_name),' (',rtrim(vend_country),')') as vend_title from vendors order by vend_name;
+  ```
+
+- 执行算数计算    
+select prod_id,quantity,item_price from orderitems where order_num = 20005;
+
+- 文本函数     
+  
+  ![alt](../database/image/bjbh03.png)
+  ![alt](../database/image/bjbh04.png)
+  ```sql
+  select vend_name, upper(vend_name) as vend_name_upcase from vendors order by vend_name;
+  ```
+  soundex() 描述语音表示的字母数字模式的算法,对串按照发音比较而不是字母比较
+  ```sql
+  select cust_name,cust_contact from customers where cust_contact = 'Y. Lie';  # 无返回 
+  select cust_name,cust_contact from customers where soundex(cust_contact) = soundex('Y. Lie'); # 按发音搜索 
+  ```
+
+- 日期函数    
+  常用日期函数
+  ![alt](../database/image/bjbh05.png)
+  按照date()日期进行过滤信息，更可靠 
+  ```sql
+  select cust_id,order_num from orders where date(order_date) = "2005-09-01";
+  ```
+
+ 
+
+  

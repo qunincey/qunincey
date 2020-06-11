@@ -5,6 +5,7 @@ tags:
  - java
 categories:
  - java
+description: false
 ---
 # Java中的基础数据类型
 Java中的基础数据类型一共有8钟，其中有4种整型、2种浮点类型、1种用于表示Unicode编码的字符单元的字符类型char（请参见论述char类型的章节）和1种用于表示真值的boolean类型
