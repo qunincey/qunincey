@@ -112,6 +112,8 @@ SHOW ERRORS和SHOW WARNINGS，用来显示服务器错误或警告消息。
   where vend_id not in (1002,1003) order by prod_name;
   # Mysql支持not对in，between，exsits子句取反 
   ```
+# 搜索
+
 - 通配符搜索    
   使用%和_进行通配符搜索，%匹配多个字符，_匹配一个字符,使用like匹配字段中包含anvil，并且anvil出现的次数不受限制。
   ```sql
@@ -170,17 +172,18 @@ SHOW ERRORS和SHOW WARNINGS，用来显示服务器错误或警告消息。
   select prod_name from products where prod_name regexp '\\([0-9] sticks?\\)'
   order by prod_name;  # 返回了'TNT (1 stick)'和'TNT (5 sticks)'
   ```
-- 定位符
+- 定位符      
   !['定位符'](../database/image/bibh02.png)
   ```sql
   select prod_name from products where prod_name regexp '^[0-9\\.]' order by prod_name; #找出以一个数（包括以小数点开始的数）开始的所有产品
   select prod_name from products where prod_name regexp '[0-9\\.]' order by prod_name;  #找出包括小数点和数字的所有产品
   ```
+# 函数
 - 拼接字段 concat()
   ```sql
   select concat(vend_name,' (',vend_country,')') from vendors order by vend_name; 
   ```
-- 删除空格
+- 删除空格   
   删除数据左侧多余空格 ltrim()   
   删除数据两侧多余空格 trim()   
   删除数据右侧多余空格 rtrim()  
@@ -194,7 +197,9 @@ SHOW ERRORS和SHOW WARNINGS，用来显示服务器错误或警告消息。
   ```
 
 - 执行算数计算    
-select prod_id,quantity,item_price from orderitems where order_num = 20005;
+  ```sql
+  select prod_id,quantity,item_price from orderitems where order_num = 20005;
+  ```
 
 - 文本函数     
   
@@ -211,11 +216,44 @@ select prod_id,quantity,item_price from orderitems where order_num = 20005;
 
 - 日期函数    
   常用日期函数
-  ![alt](../database/image/bjbh05.png)
+  ![alt](../database/image/bjbh05.png)     
   按照date()日期进行过滤信息，更可靠 
   ```sql
   select cust_id,order_num from orders where date(order_date) = "2005-09-01";
   ```
+- 聚合函数   
+  ![alt](../database/image/bjbh07.png)
+  avg() 求和，忽略null
+  ```sql
+  select avg(prod_price) as avg_price from products;
+  ```
+  count() 对行的数目进行统计 忽略null
+  ```sql
+  select count(*) as num_cust from customers; 
+  ```
+  max() & min()  最大最小
+  ```sql
+  select max(prod_price) as max_price from products;
+  select min(prod_price) as min_price from products;
+  ```
+  在用于文本数据时，如果数据按相应的列排序，则MIN()返回最前面一行
+  ```sql
+  select min(prod_name) from products; 
+  ```
+  sum 求和
+  ```sql
+  select sum(quantity) as items_ordered from orderitems;
+  ```
+  使用聚合函数时去重
+  ```sql
+  select avg(distinct prod_price) as avg_price from products where vend_id = 1003;
+  ```
+  在使用COUNT的使用指定条件，最后必须加上NULL，因为COUNT是不计算null的，如果这行数据的release_year不等于2006，那么就是返回null，而null不被计算，所以用这种方式进行筛选
+  ```sql
+  count(release_year = '2006' or NULL) 
+  ```
+
+
 
  
 
