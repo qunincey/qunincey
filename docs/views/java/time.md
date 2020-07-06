@@ -24,7 +24,7 @@ GMT: 格林威治时间，指位于伦敦郊区的皇家格林尼治天文台的
 
 UTC：原子钟时间，是比GMT更加准确的时间，其实格林威治的时间现在已经向UTC靠齐了，所以可以认为二者没什么区别。
 
-### Java8之前
+## Java8之前
 
 java中最常见的时间类是java.util.Date,这个类是java1.1之前就存在的类。如果现在去看java源码的话，还可以看到James Gosling等人所写的注释，但是这个类不适合国际化的使用，所以在1.1之后，引入了Calendar类，并且Date里的大部分方法废弃掉了，现在的Date更适合作为一个日期表示类，而日期相关的操作则需要使用Calendar类。    
 
@@ -42,7 +42,7 @@ public static Date getEndTime(Date date) {
 ```
 这是一个获取一天中结尾的时间，通过getInstance获取相关实例，再通过设置时分秒不同字段的值，最后使用getTime返回一个date类型。Calendar相关的方法还有很多，这一部分可以直接看文档。
 
-### Java8之后
+## Java8之后
 
 虽然Calendar类和相关的日期api能够满足日常开发需求，但是也有例如线程安全等问题，所以Java8引入了全新的时间api。在java.time包下，新的api将时间分为三个类，LocalDate，LocalTime，和LocalDateTime，前二者分别表示日期和具体时间，第三个表示日期加时间，下面提到获取一天结束时间，在java8之后则简便了很多
 ```
@@ -51,6 +51,7 @@ LocalTime localTime = LocalTime.of(0,0,0);
 LocalDateTime localDateTime = LocalDateTime.of(date,localTime);
 ```
 第一步获取日期，第二步设置时间，最后通过of方法同时设置日期和时间即可，不仅仅是代码简便了，相对应的代码语义化更好。
+
 
 
 

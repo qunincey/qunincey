@@ -25,6 +25,16 @@ categories:
 
 主键是用来标识出唯一的行，如果没有主键，那么涉及到相关操作的时候，就有可能无法保证删除到正确的行。
 
+- 设置主键
+  ```sql
+  CREATE TABLE student_score (
+      number INT,
+      subject VARCHAR(30),
+      score TINYINT,
+      PRIMARY KEY (number, subject)
+  );
+  ```
+
 
 
 ## 主键设置规则
@@ -506,7 +516,7 @@ exit
 ## 表操作
 - 新建表
   ```sql
-  CREATE TABLE customers
+  CREATE TABLE IF NOT EXISTS customers
   (
     cust_id      int       NOT NULL AUTO_INCREMENT,
     cust_name    char(50)  NOT NULL ,
@@ -518,7 +528,8 @@ exit
     cust_contact char(50)  NULL ,
     cust_email   char(255) NULL ,
     PRIMARY KEY (cust_id)
-  ) ENGINE=InnoDB;
+  ) COMMENT '表的注释信息',
+  ENGINE=InnoDB;
   ```
 - 添加列
   给vendors表增加一个名为vend_phone的列
@@ -526,12 +537,42 @@ exit
   alter table vendors 
   add vend_phone char(20);
   ```
-  删除列
+  添加列到指定位置
+  ```sql
+  ALTER TABLE 表名 ADD COLUMN 列名 列的类型 [列的属性] FIRST;
+  ```
+
+  添加列到指定列后
+  ```sql
+  ALTER TABLE 表名 ADD COLUMN 列名 列的类型 [列的属性] AFTER 指定列名;
+  ```
+- 删除列
   ```sql
   alter table vendors
   drop column vend_phone;
   ```
-  定义外键
+- 修改列
+  ```sql
+  ALTER TABLE 表名 MODIFY 列名 新数据类型 [新属性];
+  ```
+- 列的默认值
+  ```sql
+  列名 列的类型 DEFAULT 默认值
+  ```
+- 设置非空列
+  ```sql
+  列名 列的类型 NOT NULL
+  ```
+- 列设置数据不重复
+  在设置列的时候可以使用unique关键字，保证列中数据不会重复。
+  ```sql
+  id_number CHAR(18) UNIQUE,
+  ```
+  也可以单独设置
+  ```sql
+  UNIQUE KEY [约束名称] (列名1, 列名2, ...)
+  ```
+- 定义外键
   ```sql
   ALTER TABLE orderitems ADD CONSTRAINT fk_orderitems_orders FOREIGN KEY (order_num) REFERENCES orders (order_num);
   ```
@@ -541,10 +582,21 @@ exit
   ```
 - 重命名表
   ```sql
+  //第一种
   rename table backup_customers to customer,
 	backup_vendors to vendors,
   backup_products to products;
+  //第二种
+  ALTER TABLE 旧表名 RENAME TO 新表名;
+  ```
+- 转移表到另一个数据库
+  ```sql
+   ALTER TABLE first_table1 RENAME TO dahaizi.first_table1;
   ```  
+- 多个操作合并
+  ```sql
+  ALTER TABLE 表名 操作1, 操作2, ..., 操作n;
+  ```
 ## 视图操作
   - 创建视图
     ```sql
@@ -857,6 +909,10 @@ exit
   - 优化表OPTIMIZE TABLE，消除删除和更新造成的磁盘碎片，从而减少空间的浪费
     ```sql
     optimize table orders;
+    ```
+  - 删除数据库
+    ```sql
+    DROP DATABASE IF EXISTS 数据库名;
     ```
 
 
